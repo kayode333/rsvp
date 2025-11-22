@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+# Import config from python-decouple
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -111,7 +113,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static"] # Corrected from STATIC
 
 # Media files (user-uploaded content)
 MEDIA_URL = '/media/'
@@ -122,13 +124,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
-# Email settings (for Gmail using App Password)
+# Email settings (loaded from environment variables)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'kydsoji@gmail.com'  # Your Gmail address
-EMAIL_HOST_PASSWORD = 'wvxosrufsahkbkou'  # Your Gmail App Password
-DEFAULT_FROM_EMAIL = 'kydsoji@gmail.com' # Optional: Sets the default from email address
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') # Load from .env
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # Load from .env
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER', default='webmaster@localhost') # Use the same user or default
