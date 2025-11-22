@@ -1,0 +1,11 @@
+{% extends 'rsvp/base.html' %}
+
+{% block content %}
+<div class="form-section" style="text-align: center; padding: 40px;">
+    <h2 class="section-title"><i class="fas fa-check-circle"></i> RSVP Confirmed!</h2>
+    <p style="font-size: 1.1rem; margin: 20px 0;">Thank you for your RSVP! We look forward to seeing you at the event.</p>
+    <a href="{% url 'index' %}" class="btn">
+        <i class="fas fa-home"></i> Back to Events
+    </a>
+</div>
+{% endblock %}

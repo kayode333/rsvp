@@ -1,0 +1,43 @@
+{% extends 'rsvp/base.html' %}
+
+{% load form_extras %}
+
+{% block content %}
+<div class="form-section">
+    <h2 class="section-title"><i class="fas fa-plus-circle"></i> Add New Event</h2>
+    
+    <!-- Success message -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
+                <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+                <div>
+                    <strong>{% if message.tags == 'success' %}Success!{% else %}Error!{% endif %}</strong> {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="text-error mt-1">{{ field.errors }}</div>
+                {% endif %}
+                {% if field.name == 'event_image' %}
+                    <small class="text-gray-500 mt-1 block">Upload an image for your event (JPG, PNG, GIF)</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn">
+            <i class="fas fa-paper-plane"></i> Create Event
+        </button>
+        <a href="{% url 'index' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}
